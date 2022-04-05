@@ -66,6 +66,7 @@ spring:
     enabled: true
   h2:
     console:
+
       enabled: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

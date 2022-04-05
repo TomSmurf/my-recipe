@@ -36,9 +36,6 @@ public class AuthController {
     public ResponseEntity<JwtToken> authorize(@RequestBody @Valid AuthDto authDto) {
         var authenticationToken = new UsernamePasswordAuthenticationToken(authDto.getUsername(), authDto.getPassword());
         var authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
         var token = tokenProvider.createToken(authentication, authDto.isRememberMe());
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)

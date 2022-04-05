@@ -7,10 +7,10 @@ import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,7 +43,7 @@ public class TokenProvider {
     public TokenProvider(MyRecipeProperties myRecipeProperties) {
         String secret = myRecipeProperties.getSecurity().getAuthentication().getJwt().getBase64Secret();
         this.key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
-        this.jwtParser = Jwts.parser().setSigningKey(key);
+        this.jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
         this.tokenValidityInSeconds = myRecipeProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSeconds();
         this.tokenValidityInSecondsForRememberMe = myRecipeProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe();
     }
@@ -67,7 +67,7 @@ public class TokenProvider {
                 .builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
-                .signWith(SignatureAlgorithm.HS512, key)
+                .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
                 .compact();
     }

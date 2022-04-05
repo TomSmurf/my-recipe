@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-@SpringBootTest(classes = ServerApplication.class)
+@SpringBootTest(classes = ServerApplication.class, properties = "spring.jpa.show-sql=true")
 abstract class AbstractIntegrationTest {
 
     @Autowired
