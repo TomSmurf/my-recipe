@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-md-3 side-menu">
+    <div role="alert" class="alert alert-info"> MyRecipe is the best place to keep your recipes, with no installation
+      required!
+    </div>
+  </div>
+
+  <div class="col-md-9">
+    <h1 class="display-4">Welcome, this is My Recipe!</h1>
+
+    <p class="lead">This is your homepage</p>
+
+    <div [ngSwitch]="account !== null">
+      <div class="alert alert-success" *ngSwitchCase="true">
+        <span id="home-logged-message" *ngIf="account">You are logged in as user "{{ account.login }}".</span>
+      </div>
+
+      <div class="alert alert-warning" *ngSwitchCase="false">
+        If you want to
+        <a class="alert-link" (click)="login()">sign in</a>
+        you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />-
+        User (login="user" and password="user").
+      </div>
+
+      <div class="alert alert-warning" *ngSwitchCase="false">
+        You don't have an account yet?
+        <a class="alert-link" routerLink="account/register">Register a new account</a>
+      </div>
+    </div>
+  </div>
+</div>

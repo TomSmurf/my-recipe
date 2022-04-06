@@ -1,5 +1,7 @@
 package be.ucll.myrecipe.server.api;
 
+import java.util.Set;
+
 public class UserDto {
 
     private Long id;
@@ -7,6 +9,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private String email;
+    private Set<String> authorities;
 
     public Long getId() {
         return id;
@@ -46,5 +49,13 @@ public class UserDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Set<String> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<String> authorities) {
+        this.authorities = authorities;
     }
 }
