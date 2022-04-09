@@ -1,0 +1,11 @@
+<div>
+  <h2>
+    Application Metrics
+    <button class="btn btn-primary float-end" (click)="refresh()">
+      <fa-icon icon="sync"></fa-icon> Refresh
+    </button>
+  </h2>
+
+  <myr-jvm-threads [threads]="threads" *ngIf="threads && !updatingMetrics"></myr-jvm-threads>
+  
+</div>

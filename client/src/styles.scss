@@ -5,23 +5,9 @@
 @import "~bootstrap/scss/bootstrap";
 @import "~bootswatch/dist/lux/bootswatch";
 
-/* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
-a:not([href]):not([tabindex]):hover.dropdown-item {
-    color: $dropdown-link-hover-color;
-}
-
-/* override .dropdown-item.active background-color on hover */
-.dropdown-item.active:hover {
-    background-color: mix($dropdown-link-hover-bg, $dropdown-link-active-bg, 50%);
-}
-
 a:hover {
     /* make sure browsers use the pointer cursor for anchors, even with no href */
     cursor: pointer;
-}
-
-.dropdown-item:hover {
-    color: $dropdown-link-hover-color;
 }
 
 /* ==========================================================================
@@ -48,7 +34,7 @@ Generic styles
 
 .error {
     color: white;
-    background-color: $danger;
+    background-color: red;
 }
 
 .pad {
@@ -80,6 +66,13 @@ Generic styles
 .hand,
 [myrsortby] {
     cursor: pointer;
+}
+
+.thread-dump-modal-lock {
+    max-width: 450px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* ==========================================================================

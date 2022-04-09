@@ -30,7 +30,6 @@ export class AlertErrorComponent implements OnDestroy {
           case 0:
             this.addErrorAlert('Server not reachable');
             break;
-
           case 400: {
             if (httpErrorResponse.error !== '' && httpErrorResponse.error.errors) {
               const fieldErrors = httpErrorResponse.error.errors;
@@ -44,14 +43,13 @@ export class AlertErrorComponent implements OnDestroy {
             }
             break;
           }
-
           case 404:
             this.addErrorAlert('Not found');
             break;
 
           default:
             if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
-              this.addErrorAlert(httpErrorResponse.error.message,);
+              this.addErrorAlert(httpErrorResponse.error.message);
             } else {
               this.addErrorAlert(httpErrorResponse.error);
             }

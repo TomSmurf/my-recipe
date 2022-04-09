@@ -17,7 +17,7 @@
             Home
           </a>
         </li>
-        <li *myrHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic"
+        <li *myrHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown" display="dynamic"
           routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
             <fa-icon icon="users-cog"></fa-icon>
@@ -56,15 +56,9 @@
                 Logs
               </a>
             </li>
-            <li>
-              <a class="dropdown-item" routerLink="admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
-                <fa-icon icon="book" [fixedWidth]="true"></fa-icon>
-                API
-              </a>
-            </li>
           </ul>
         </li>
-        <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active"
+        <li ngbDropdown class="nav-item dropdown" display="dynamic" routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
             <fa-icon icon="user"></fa-icon> Account
