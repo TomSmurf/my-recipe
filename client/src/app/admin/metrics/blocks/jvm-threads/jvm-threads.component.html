@@ -36,7 +36,7 @@
   <span>{{ (threadStats.threadDumpWaiting * 100) / threadStats.threadDumpAll | number: '1.0-0' }}%</span>
 </ngb-progressbar>
 
-<span>Blocked> ({{ threadStats.threadDumpBlocked }})</span>
+<span>Blocked ({{ threadStats.threadDumpBlocked }})</span>
 
 <ngb-progressbar
   [value]="threadStats.threadDumpBlocked"

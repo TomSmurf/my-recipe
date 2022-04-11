@@ -9,9 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -43,8 +42,8 @@ class AuthControllerTest extends AbstractIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id_token").isString())
                 .andExpect(jsonPath("$.id_token").isNotEmpty())
-                .andExpect(header().string("Authorization", not(nullValue())))
-                .andExpect(header().string("Authorization", not(is(emptyString()))));
+                .andExpect(header().string("Authorization", notNullValue()))
+                .andExpect(header().string("Authorization", not(emptyString())));
     }
 
     @Test
@@ -66,8 +65,8 @@ class AuthControllerTest extends AbstractIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id_token").isString())
                 .andExpect(jsonPath("$.id_token").isNotEmpty())
-                .andExpect(header().string("Authorization", not(nullValue())))
-                .andExpect(header().string("Authorization", not(is(emptyString()))));
+                .andExpect(header().string("Authorization", notNullValue()))
+                .andExpect(header().string("Authorization", not(emptyString())));
     }
 
     @Test

@@ -45,7 +45,7 @@ public class UserService {
             throw new UsernameAlreadyUsedException();
         }
 
-        if (userRepository.existsByLogin(login.toLowerCase())) {
+        if (userRepository.existsByEmailIgnoreCase(email)) {
             throw new EmailAlreadyUsedException();
         }
 
@@ -83,11 +83,11 @@ public class UserService {
     }
 
     @Transactional
-    public void changePassword(String currentClearTextPassword, String newPassword) {
+    public void changePassword(String currentPassword, String newPassword) {
         var userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("Current user login not found"));
 
         var user = userRepository.findOneByLogin(userLogin).orElseThrow(() -> new IllegalStateException("User could not be found"));
-        if (!passwordEncoder.matches(currentClearTextPassword, user.getPassword())) {
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
             throw new InvalidPasswordException();
         }
         user.setPassword(passwordEncoder.encode(newPassword));

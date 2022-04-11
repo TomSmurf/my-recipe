@@ -1,6 +1,6 @@
 package be.ucll.myrecipe.server.web.rest;
 
-import be.ucll.myrecipe.server.api.PasswordChangeDTO;
+import be.ucll.myrecipe.server.api.PasswordChangeDto;
 import be.ucll.myrecipe.server.api.UserDto;
 import be.ucll.myrecipe.server.api.UserRegisterDto;
 import be.ucll.myrecipe.server.api.UserUpdateDto;
@@ -27,6 +27,17 @@ public class AccountController {
         this.userMapper = userMapper;
     }
 
+    @GetMapping("/authenticate")
+    public String isAuthenticated(HttpServletRequest request) {
+        return request.getRemoteUser();
+    }
+
+    @GetMapping("/account")
+    public UserDto getAccount() {
+        var user = userService.getUserWithAuthorities();
+        return userMapper.userToUserDto(user);
+    }
+
     @PostMapping("/register")
     public void registerAccount(@Valid @RequestBody UserRegisterDto userDto) {
         userService.registerUser(
@@ -38,24 +49,13 @@ public class AccountController {
         );
     }
 
-    @GetMapping("/account")
-    public UserDto getAccount() {
-        var user = userService.getUserWithAuthorities();
-        return userMapper.userToUserDto(user);
-    }
-
-    @GetMapping("/authenticate")
-    public String isAuthenticated(HttpServletRequest request) {
-        return request.getRemoteUser();
-    }
-
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody UserUpdateDto userDTO) {
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail());
     }
 
     @PostMapping("/account/change-password")
-    public void changePassword(@Valid @RequestBody PasswordChangeDTO passwordChangeDto) {
+    public void changePassword(@Valid @RequestBody PasswordChangeDto passwordChangeDto) {
         userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
     }
 }
