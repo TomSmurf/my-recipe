@@ -1,0 +1,105 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/" (click)="collapseNavbar()">
+      <span class="navbar-title">My Recipe</span>
+    </a>
+    <a class="navbar-toggler d-lg-none" href="javascript:void(0);" data-toggle="collapse"
+      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+      aria-label="Toggle navigation" (click)="toggleNavbar()">
+      <fa-icon icon="bars"></fa-icon>
+    </a>
+    <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed"
+      [ngSwitch]="account !== null">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
+            <fa-icon icon="home"></fa-icon>
+            Home
+          </a>
+        </li>
+        <li *myrHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown" display="dynamic"
+          routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
+            <fa-icon icon="users-cog"></fa-icon>
+            Administration
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="admin-menu">
+            <li>
+              <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active"
+                (click)="collapseNavbar()">
+                <fa-icon icon="users" [fixedWidth]="true"></fa-icon>
+                User management
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/metrics" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="tachometer-alt" [fixedWidth]="true"></fa-icon>
+                Metrics
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/health" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="heart" [fixedWidth]="true"></fa-icon>
+                Health
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/configuration" routerLinkActive="active"
+                (click)="collapseNavbar()">
+                <fa-icon icon="cogs" [fixedWidth]="true"></fa-icon>
+                Configuration
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="admin/logs" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="tasks" [fixedWidth]="true"></fa-icon>
+                Logs
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li ngbDropdown class="nav-item dropdown" display="dynamic" routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
+            <fa-icon icon="user"></fa-icon> Account
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
+            <li *ngSwitchCase="true">
+              <a class="dropdown-item" routerLink="account/settings" routerLinkActive="active"
+                (click)="collapseNavbar()">
+                <fa-icon icon="wrench" [fixedWidth]="true"></fa-icon>
+                Settings
+              </a>
+            </li>
+            <li *ngSwitchCase="true">
+              <a class="dropdown-item" routerLink="account/password" routerLinkActive="active"
+                (click)="collapseNavbar()">
+                <fa-icon icon="lock" [fixedWidth]="true"></fa-icon>
+                Password
+              </a>
+            </li>
+            <li *ngSwitchCase="true">
+              <a class="dropdown-item" (click)="logout()" id="logout">
+                <fa-icon icon="sign-out-alt" [fixedWidth]="true"></fa-icon>
+                Sign out
+              </a>
+            </li>
+            <li *ngSwitchCase="false">
+              <a class="dropdown-item" (click)="login()" id="login">
+                <fa-icon icon="sign-in-alt" [fixedWidth]="true"></fa-icon>
+                Sign in
+              </a>
+            </li>
+            <li *ngSwitchCase="false">
+              <a class="dropdown-item" routerLink="account/register" routerLinkActive="active"
+                (click)="collapseNavbar()">
+                <fa-icon icon="user-plus" [fixedWidth]="true"></fa-icon>
+                Register
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
