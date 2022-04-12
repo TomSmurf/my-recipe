@@ -17,12 +17,6 @@ export class AuthServerProvider {
     private sessionStorageService: SessionStorageService
   ) {}
 
-  getToken(): string {
-    const tokenInLocalStorage: string | null = this.localStorageService.retrieve('authenticationToken');
-    const tokenInSessionStorage: string | null = this.sessionStorageService.retrieve('authenticationToken');
-    return tokenInLocalStorage ?? tokenInSessionStorage ?? '';
-  }
-
   login(credentials: Login): Observable<void> {
     return this.http
       .post<JwtToken>('api/authenticate', credentials)

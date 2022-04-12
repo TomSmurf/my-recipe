@@ -24,6 +24,10 @@ export class AccountService {
     return this.http.post('api/account', account);
   }
 
+  delete(): Observable<{}> {
+    return this.http.delete('api/account');
+  }
+
   authenticate(identity: Account | null): void {
     this.userIdentity = identity;
     this.authenticationState.next(this.userIdentity);

@@ -6,10 +6,13 @@ import be.ucll.myrecipe.server.api.UserRegisterDto;
 import be.ucll.myrecipe.server.api.UserUpdateDto;
 import be.ucll.myrecipe.server.mapper.UserMapper;
 import be.ucll.myrecipe.server.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,12 +35,6 @@ public class AccountController {
         return request.getRemoteUser();
     }
 
-    @GetMapping("/account")
-    public UserDto getAccount() {
-        var user = userService.getUserWithAuthorities();
-        return userMapper.userToUserDto(user);
-    }
-
     @PostMapping("/register")
     public void registerAccount(@Valid @RequestBody UserRegisterDto userDto) {
         userService.registerUser(
@@ -49,9 +46,21 @@ public class AccountController {
         );
     }
 
+    @GetMapping("/account")
+    public UserDto getAccount() {
+        var user = userService.getUserWithAuthorities();
+        return userMapper.userToUserDto(user);
+    }
+
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody UserUpdateDto userDTO) {
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail());
+    }
+
+    @DeleteMapping("/account")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAccount() {
+        userService.deleteUser();
     }
 
     @PostMapping("/account/change-password")

@@ -1,0 +1,23 @@
+<form name="deleteForm" (ngSubmit)="confirmDelete()">
+  <div class="modal-header">
+    <h4 class="modal-title">Confirm delete operation</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()"></button>
+  </div>
+
+  <div class="modal-body">
+    <myr-alert-error></myr-alert-error>
+
+    <p>Are you sure you want to delete your account?</p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      Cancel
+    </button>
+
+    <button type="submit" class="btn btn-danger">
+      Delete
+    </button>
+  </div>
+</form>

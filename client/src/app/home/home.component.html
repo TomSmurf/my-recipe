@@ -16,15 +16,8 @@
       </div>
 
       <div class="alert alert-warning" *ngSwitchCase="false">
-        If you want to
-        <a class="alert-link" (click)="login()">sign in</a>
-        you can try the default accounts:<br />- Administrator (login="admin" and password="admin") <br />-
-        User (login="user" and password="user").
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        You don't have an account yet?
-        <a class="alert-link" routerLink="account/register">Register a new account</a>
+        <a class="alert-link" (click)="login()">Sign in</a> here. You don't have an account yet? <a class="alert-link"
+          routerLink="account/register">Register a new account</a>
       </div>
     </div>
   </div>

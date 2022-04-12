@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PasswordComponent } from './password/password.component';
 import { RegisterComponent } from './register/register.component';
 import { SettingsComponent } from './settings/settings.component';
+import { AccountDeleteModalComponent } from './settings/modal/account-delete-modal.component';
 
 @NgModule({
   imports: [SharedModule, RouterModule.forChild(accountState)],
@@ -15,6 +16,7 @@ import { SettingsComponent } from './settings/settings.component';
     PasswordComponent,
     PasswordStrengthBarComponent,
     SettingsComponent,
+    AccountDeleteModalComponent
   ],
 })
 export class AccountModule {}

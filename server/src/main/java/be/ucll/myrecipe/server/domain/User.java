@@ -95,7 +95,7 @@ public class User extends AbstractAuditingEntity {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = StringUtils.lowerCase(email, Locale.ENGLISH);
     }
 
     public Set<Authority> getAuthorities() {

@@ -45,7 +45,7 @@ public class UserService {
             throw new UsernameAlreadyUsedException();
         }
 
-        if (userRepository.existsByEmailIgnoreCase(email)) {
+        if (email != null && userRepository.existsByEmailIgnoreCase(email)) {
             throw new EmailAlreadyUsedException();
         }
 
@@ -54,10 +54,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(password));
         user.setFirstName(firstName);
         user.setLastName(lastName);
-
-        if (email != null) {
-            user.setEmail(email.toLowerCase());
-        }
+        user.setEmail(email);
 
         var authorities = new HashSet<Authority>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
@@ -79,7 +76,7 @@ public class UserService {
         var user = userRepository.findOneByLogin(userLogin).orElseThrow(() -> new IllegalStateException("User could not be found"));
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        user.setEmail(email == null ? null : email.toLowerCase());
+        user.setEmail(email);
     }
 
     @Transactional
@@ -91,5 +88,11 @@ public class UserService {
             throw new InvalidPasswordException();
         }
         user.setPassword(passwordEncoder.encode(newPassword));
+    }
+
+    @Transactional
+    public void deleteUser() {
+        var userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("Current user login not found"));
+        userRepository.findOneByLogin(userLogin).ifPresent(userRepository::delete);
     }
 }

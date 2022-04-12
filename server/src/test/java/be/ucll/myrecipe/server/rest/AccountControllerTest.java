@@ -20,6 +20,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -513,5 +514,28 @@ class AccountControllerTest extends AbstractIntegrationTest {
         var updatedUser = userRepository.findOneByLogin("test").orElseThrow();
         assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isFalse();
         assertThat(passwordEncoder.matches("password", updatedUser.getPassword())).isTrue();
+    }
+
+    @Test
+    @WithMockUser("test")
+    void testDeleteAccount() throws Exception {
+        var authority = new Authority();
+        authority.setName(AuthoritiesConstants.ADMIN);
+        authorityRepository.save(authority);
+
+        var user = new User();
+        user.setLogin("test");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setEmail("john.doe@ucll.com");
+        user.setPassword(passwordEncoder.encode("password"));
+        user.setAuthorities(Set.of(authority));
+        userRepository.save(user);
+
+        mockMvc.perform(delete("/api/account"))
+                .andExpect(status().isNoContent());
+
+        var deletedUser = userRepository.findOneByLogin("test");
+        assertThat(deletedUser).isEmpty();
     }
 }
