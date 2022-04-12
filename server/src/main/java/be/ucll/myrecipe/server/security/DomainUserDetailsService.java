@@ -15,9 +15,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-/**
- * Authenticate a user from the database.
- */
 @Component("userDetailsService")
 public class DomainUserDetailsService implements UserDetailsService {
 
@@ -37,7 +34,7 @@ public class DomainUserDetailsService implements UserDetailsService {
                     .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
         }
 
-        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
+        var lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         return userRepository
                 .findOneWithAuthoritiesByLogin(lowercaseLogin)
                 .map(this::createSpringSecurityUser)
@@ -45,7 +42,7 @@ public class DomainUserDetailsService implements UserDetailsService {
     }
 
     private org.springframework.security.core.userdetails.User createSpringSecurityUser(User user) {
-        List<GrantedAuthority> grantedAuthorities = user
+       var grantedAuthorities = user
                 .getAuthorities()
                 .stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getName()))

@@ -8,14 +8,13 @@ import { Subscription } from 'rxjs';
 })
 export class ErrorComponent implements OnInit {
   errorMessage?: string;
-  errorKey?: string;
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.route.data.subscribe(routeData => {
       if (routeData['errorMessage']) {
-        this.errorKey = routeData['errorMessage'];
+        this.errorMessage = routeData['errorMessage'];
       }
     });
   }

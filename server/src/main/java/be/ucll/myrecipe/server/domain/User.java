@@ -62,7 +62,6 @@ public class User extends AbstractAuditingEntity {
         return login;
     }
 
-    // Lowercase the login before saving it in database
     public void setLogin(String login) {
         this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
     }

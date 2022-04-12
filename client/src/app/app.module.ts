@@ -13,6 +13,8 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { ErrorComponent } from './layouts/error/error.component';
 import { httpInterceptorProviders } from './core/interceptor';
 import { SharedModule } from './shared/shared.module';
+import { PrivacyModalComponent } from './layouts/footer/modal/privacy-modal.component';
+import { CookiesModalComponent } from './layouts/footer/modal/cookies-modal.component';
 
 @NgModule({
   imports: [
@@ -27,7 +29,7 @@ import { SharedModule } from './shared/shared.module';
     Title,
     httpInterceptorProviders,
   ],
-  declarations: [MainComponent, NavbarComponent, ErrorComponent, FooterComponent],
+  declarations: [MainComponent, NavbarComponent, ErrorComponent, FooterComponent, PrivacyModalComponent, CookiesModalComponent],
   bootstrap: [MainComponent],
 })
 export class AppModule {

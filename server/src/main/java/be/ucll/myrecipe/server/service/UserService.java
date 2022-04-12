@@ -69,17 +69,17 @@ public class UserService {
     public void updateUser(String firstName, String lastName, String email) {
         var userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("Current user login not found"));
 
-        var userOpt = userRepository.findOneByEmailIgnoreCase(email);
-        if (userOpt.isPresent() && (!userOpt.get().getLogin().equalsIgnoreCase(userLogin))) {
-            throw new EmailAlreadyUsedException();
+        if (email != null) {
+            var userOpt = userRepository.findOneByEmailIgnoreCase(email);
+            if (userOpt.isPresent() && (!userOpt.get().getLogin().equalsIgnoreCase(userLogin))) {
+                throw new EmailAlreadyUsedException();
+            }
         }
 
         var user = userRepository.findOneByLogin(userLogin).orElseThrow(() -> new IllegalStateException("User could not be found"));
         user.setFirstName(firstName);
         user.setLastName(lastName);
-        if (email != null) {
-            user.setEmail(email.toLowerCase());
-        }
+        user.setEmail(email == null ? null : email.toLowerCase());
     }
 
     @Transactional
