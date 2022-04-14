@@ -63,21 +63,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiErrorDto, apiErrorDto.getStatus());
     }
 
-    @ExceptionHandler(UsernameAlreadyUsedException.class)
-    protected ResponseEntity<ApiErrorDto> handleUsernameAlreadyUsed(UsernameAlreadyUsedException ex) {
-        var apiErrorDto = new ApiErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage());
-        return new ResponseEntity<>(apiErrorDto, apiErrorDto.getStatus());
-    }
-
-    @ExceptionHandler(EmailAlreadyUsedException.class)
-    protected ResponseEntity<ApiErrorDto> handleEmailAlreadyUsedException(EmailAlreadyUsedException ex) {
-        var apiErrorDto = new ApiErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage());
-        return new ResponseEntity<>(apiErrorDto, apiErrorDto.getStatus());
-    }
-
-    @ExceptionHandler(InvalidPasswordException.class)
-    protected ResponseEntity<ApiErrorDto> handleInvalidPasswordException(InvalidPasswordException ex) {
-        var apiErrorDto = new ApiErrorDto(HttpStatus.BAD_REQUEST, ex.getMessage());
+    @ExceptionHandler(UserForbiddenException.class) // TODO: check AccessDeniedException
+    protected ResponseEntity<ApiErrorDto> handleUserForbidden(UserForbiddenException ex) {
+        var apiErrorDto = new ApiErrorDto(HttpStatus.FORBIDDEN, ex.getMessage());
         return new ResponseEntity<>(apiErrorDto, apiErrorDto.getStatus());
     }
 

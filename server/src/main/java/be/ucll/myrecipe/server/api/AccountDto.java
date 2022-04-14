@@ -2,7 +2,7 @@ package be.ucll.myrecipe.server.api;
 
 import java.util.Set;
 
-public class UserDto {
+public class AccountDto {
 
     private Long id;
     private String login;

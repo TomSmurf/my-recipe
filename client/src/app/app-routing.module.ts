@@ -18,6 +18,14 @@ import { navbarRoute } from './layouts/navbar/navbar.route';
           loadChildren: () => import('./admin/admin-routing.module').then(m => m.AdminRoutingModule),
         },
         {
+          path: 'recipe',
+          data: {
+            authorities: [Authority.USER],
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./recipe/recipe.module').then(m => m.RecipeModule),
+        },
+        {
           path: 'account',
           loadChildren: () => import('./account/account.module').then(m => m.AccountModule),
         },
@@ -32,4 +40,4 @@ import { navbarRoute } from './layouts/navbar/navbar.route';
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

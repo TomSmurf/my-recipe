@@ -3,14 +3,17 @@ package be.ucll.myrecipe.server.domain;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.BatchSize;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.HashSet;
@@ -24,9 +27,10 @@ public class User extends AbstractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
+    @Column(name = "id")
     private Long id;
 
-    @Column(length = 50, unique = true, nullable = false)
+    @Column(name = "login", length = 50, unique = true, nullable = false)
     private String login;
 
     @Column(name = "password_hash", length = 60, nullable = false)
@@ -49,6 +53,9 @@ public class User extends AbstractAuditingEntity {
     )
     @BatchSize(size = 20)
     private Set<Authority> authorities = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Recipe> recipes = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -106,6 +113,14 @@ public class User extends AbstractAuditingEntity {
         this.authorities = authorities;
     }
 
+    public Set<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(Set<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -119,7 +134,6 @@ public class User extends AbstractAuditingEntity {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 

@@ -19,10 +19,7 @@ export class UserRouteAccessService implements CanActivate {
           if (!authorities || authorities.length === 0 || this.accountService.hasAnyAuthority(authorities)) {
             return true;
           }
-
-          if (isDevMode()) {
-            console.error('User has not any of required authorities: ', authorities);
-          }
+          
           this.router.navigate(['accessdenied']);
           return false;
         }

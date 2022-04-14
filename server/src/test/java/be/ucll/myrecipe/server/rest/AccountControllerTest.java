@@ -1,8 +1,8 @@
 package be.ucll.myrecipe.server.rest;
 
-import be.ucll.myrecipe.server.api.PasswordChangeDto;
-import be.ucll.myrecipe.server.api.UserRegisterDto;
-import be.ucll.myrecipe.server.api.UserUpdateDto;
+import be.ucll.myrecipe.server.api.AccountPasswordDto;
+import be.ucll.myrecipe.server.api.AccountRegisterDto;
+import be.ucll.myrecipe.server.api.AccountUpdateDto;
 import be.ucll.myrecipe.server.domain.Authority;
 import be.ucll.myrecipe.server.domain.User;
 import be.ucll.myrecipe.server.repository.AuthorityRepository;
@@ -88,9 +88,8 @@ class AccountControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @WithMockUser("test")
     void testRegisterValid() throws Exception {
-        var userRegisterDto = new UserRegisterDto();
+        var userRegisterDto = new AccountRegisterDto();
         userRegisterDto.setLogin("test");
         userRegisterDto.setPassword("password");
         userRegisterDto.setFirstName("John");
@@ -109,7 +108,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
 
     @Test
     void testRegisterInvalidLogin() throws Exception {
-        var userRegisterDto = new UserRegisterDto();
+        var userRegisterDto = new AccountRegisterDto();
         userRegisterDto.setLogin("funky-log(n");
         userRegisterDto.setPassword("password");
         userRegisterDto.setFirstName("John");
@@ -127,7 +126,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
 
     @Test
     void testRegisterInvalidEmail() throws Exception {
-        var userRegisterDto = new UserRegisterDto();
+        var userRegisterDto = new AccountRegisterDto();
         userRegisterDto.setLogin("test");
         userRegisterDto.setPassword("password");
         userRegisterDto.setFirstName("John");
@@ -145,7 +144,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
 
     @Test
     void testRegisterInvalidPassword() throws Exception {
-        var userRegisterDto = new UserRegisterDto();
+        var userRegisterDto = new AccountRegisterDto();
         userRegisterDto.setLogin("test");
         userRegisterDto.setPassword("123");
         userRegisterDto.setFirstName("John");
@@ -163,7 +162,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
 
     @Test
     void testRegisterNullPassword() throws Exception {
-        var userRegisterDto = new UserRegisterDto();
+        var userRegisterDto = new AccountRegisterDto();
         userRegisterDto.setLogin(null);
         userRegisterDto.setPassword("123");
         userRegisterDto.setFirstName("John");
@@ -194,7 +193,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var userRegisterDto = new UserRegisterDto();
+        var userRegisterDto = new AccountRegisterDto();
         userRegisterDto.setLogin("test");
         userRegisterDto.setPassword("password");
         userRegisterDto.setFirstName("Jane");
@@ -222,7 +221,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var userRegisterDto = new UserRegisterDto();
+        var userRegisterDto = new AccountRegisterDto();
         userRegisterDto.setLogin("jane");
         userRegisterDto.setPassword("password");
         userRegisterDto.setFirstName("Jane");
@@ -251,7 +250,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var userUpdateDto = new UserUpdateDto();
+        var userUpdateDto = new AccountUpdateDto();
         userUpdateDto.setFirstName("Jane");
         userUpdateDto.setLastName("Doe");
         userUpdateDto.setEmail("jane.doe@ucll.com");
@@ -285,7 +284,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var userUpdateDto = new UserUpdateDto();
+        var userUpdateDto = new AccountUpdateDto();
         userUpdateDto.setFirstName("John");
         userUpdateDto.setLastName("Doe");
         userUpdateDto.setEmail("invalid");
@@ -323,7 +322,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user2.setAuthorities(Set.of(authority));
         userRepository.save(user2);
 
-        var userUpdateDto = new UserUpdateDto();
+        var userUpdateDto = new AccountUpdateDto();
         userUpdateDto.setFirstName("John");
         userUpdateDto.setLastName("Doe");
         userUpdateDto.setEmail("jane.doe@ucll.com");
@@ -353,7 +352,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var userUpdateDto = new UserUpdateDto();
+        var userUpdateDto = new AccountUpdateDto();
         userUpdateDto.setFirstName("John");
         userUpdateDto.setLastName("Doe");
         userUpdateDto.setEmail("john.doe@ucll.com");
@@ -383,7 +382,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var passwordChangeDto = new PasswordChangeDto();
+        var passwordChangeDto = new AccountPasswordDto();
         passwordChangeDto.setCurrentPassword("wrong-password");
         passwordChangeDto.setNewPassword("new-password");
 
@@ -413,7 +412,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var passwordChangeDto = new PasswordChangeDto();
+        var passwordChangeDto = new AccountPasswordDto();
         passwordChangeDto.setCurrentPassword("password");
         passwordChangeDto.setNewPassword("new password");
 
@@ -442,7 +441,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var passwordChangeDto = new PasswordChangeDto();
+        var passwordChangeDto = new AccountPasswordDto();
         passwordChangeDto.setCurrentPassword("password");
         passwordChangeDto.setNewPassword("123");
 
@@ -472,7 +471,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var passwordChangeDto = new PasswordChangeDto();
+        var passwordChangeDto = new AccountPasswordDto();
         passwordChangeDto.setCurrentPassword("password");
         passwordChangeDto.setNewPassword(RandomStringUtils.random(200));
 
@@ -502,7 +501,7 @@ class AccountControllerTest extends AbstractIntegrationTest {
         user.setAuthorities(Set.of(authority));
         userRepository.save(user);
 
-        var passwordChangeDto = new PasswordChangeDto();
+        var passwordChangeDto = new AccountPasswordDto();
         passwordChangeDto.setCurrentPassword("password");
         passwordChangeDto.setNewPassword(null);
 

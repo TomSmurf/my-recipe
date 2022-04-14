@@ -1,9 +1,9 @@
 package be.ucll.myrecipe.server.web.rest;
 
-import be.ucll.myrecipe.server.api.PasswordChangeDto;
-import be.ucll.myrecipe.server.api.UserDto;
-import be.ucll.myrecipe.server.api.UserRegisterDto;
-import be.ucll.myrecipe.server.api.UserUpdateDto;
+import be.ucll.myrecipe.server.api.AccountDto;
+import be.ucll.myrecipe.server.api.AccountPasswordDto;
+import be.ucll.myrecipe.server.api.AccountRegisterDto;
+import be.ucll.myrecipe.server.api.AccountUpdateDto;
 import be.ucll.myrecipe.server.mapper.UserMapper;
 import be.ucll.myrecipe.server.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -36,7 +36,7 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public void registerAccount(@Valid @RequestBody UserRegisterDto userDto) {
+    public void registerAccount(@Valid @RequestBody AccountRegisterDto userDto) {
         userService.registerUser(
                 userDto.getLogin(),
                 userDto.getFirstName(),
@@ -47,13 +47,13 @@ public class AccountController {
     }
 
     @GetMapping("/account")
-    public UserDto getAccount() {
+    public AccountDto getAccount() {
         var user = userService.getUserWithAuthorities();
         return userMapper.userToUserDto(user);
     }
 
     @PostMapping("/account")
-    public void saveAccount(@Valid @RequestBody UserUpdateDto userDTO) {
+    public void saveAccount(@Valid @RequestBody AccountUpdateDto userDTO) {
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail());
     }
 
@@ -64,7 +64,7 @@ public class AccountController {
     }
 
     @PostMapping("/account/change-password")
-    public void changePassword(@Valid @RequestBody PasswordChangeDto passwordChangeDto) {
-        userService.changePassword(passwordChangeDto.getCurrentPassword(), passwordChangeDto.getNewPassword());
+    public void changePassword(@Valid @RequestBody AccountPasswordDto accountPasswordDto) {
+        userService.changePassword(accountPasswordDto.getCurrentPassword(), accountPasswordDto.getNewPassword());
     }
 }

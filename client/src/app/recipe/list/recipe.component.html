@@ -1,0 +1,51 @@
+<h2>
+  Recipes
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+      <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+      Refresh List
+    </button>
+    <button class="btn btn-primary" [routerLink]="['./new']">
+      <fa-icon icon="plus"></fa-icon>
+      Create a new Recipe
+    </button>
+  </div>
+</h2>
+
+<myr-alert-error></myr-alert-error>
+
+<div class="table-responsive" *ngIf="recipes">
+  <table class="table table-striped" aria-describedby="user-management-page-heading">
+    <thead>
+      <tr myrSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition()">
+        <th scope="col" myrSortBy="id">ID <fa-icon icon="sort"></fa-icon>
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf="recipes">
+      <tr *ngFor="let recipe of recipes; trackBy: trackIdentity">
+        <td>
+          <a [routerLink]="['./', recipe.id, 'view']">{{ recipe.id }}</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="recipes">
+  <div class="d-flex justify-content-center">
+    <myr-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></myr-item-count>
+  </div>
+
+  <!-- <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="transition()"
+      ></ngb-pagination>
+    </div> -->
+</div>
