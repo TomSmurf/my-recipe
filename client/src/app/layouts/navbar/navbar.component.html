@@ -17,6 +17,12 @@
             Home
           </a>
         </li>
+        <li *myrHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <a class="nav-link" routerLink="/recipe" (click)="collapseNavbar()">
+            <fa-icon icon="book"></fa-icon>
+            Recipe
+          </a>
+        </li>
         <li *myrHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown" display="dynamic"
           routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">

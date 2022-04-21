@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class UserRegisterDto extends UserUpdateDto {
+public class AccountRegisterDto extends AccountUpdateDto {
 
     @NotBlank
     @Pattern(regexp = Constants.LOGIN_REGEX)

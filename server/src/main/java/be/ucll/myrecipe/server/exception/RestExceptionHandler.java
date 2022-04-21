@@ -81,9 +81,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiErrorDto, apiErrorDto.getStatus());
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ApiErrorDto> handleUncaught(Exception ex, WebRequest request) {
-//        var apiError = new ApiErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error");
-//        return new ResponseEntity<>(apiError, apiError.getStatus());
-//    }
+    @ExceptionHandler(UserForbiddenException.class)
+    protected ResponseEntity<ApiErrorDto> handleUserForbidden(UserForbiddenException ex) {
+        var apiErrorDto = new ApiErrorDto(HttpStatus.FORBIDDEN, ex.getMessage());
+        return new ResponseEntity<>(apiErrorDto, apiErrorDto.getStatus());
+    }
 }

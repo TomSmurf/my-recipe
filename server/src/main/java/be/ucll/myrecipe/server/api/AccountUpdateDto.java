@@ -3,7 +3,7 @@ package be.ucll.myrecipe.server.api;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-public class UserUpdateDto {
+public class AccountUpdateDto {
 
     @Size(max = 50)
     private String firstName;

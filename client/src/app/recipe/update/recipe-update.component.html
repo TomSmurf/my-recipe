@@ -1,0 +1,106 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2>Create or edit a Recipe</h2>
+
+      <div *ngIf="recipe">
+        <myr-alert-error></myr-alert-error>
+
+        <div class="mb-3">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" formControlName="name" />
+
+          <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.['required']">
+              This field is required.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.['minlength']">
+              This field is required to be at least 1 character.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('name')?.errors?.['maxlength']">
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Rating</label>
+          <select class="form-select" id="rating" name="rating" formControlName="rating">
+            <option *ngFor="let rating of [1, 2, 3, 4, 5]" [value]="rating">
+              {{ rating }}
+            </option>
+          </select>
+
+          <div
+            *ngIf="editForm.get('rating')!.invalid && (editForm.get('rating')!.dirty || editForm.get('rating')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('rating')?.errors?.['required']">
+              This field is required.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('rating')?.errors?.['min']">
+              This field is required to be at least 1.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('rating')?.errors?.['max']">
+              This field cannot be longer than 5.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Ingredients</label>
+          <textarea class="form-control" rows="10" name="ingredients" formControlName="ingredients"></textarea>
+
+          <div
+            *ngIf="editForm.get('ingredients')!.invalid && (editForm.get('ingredients')!.dirty || editForm.get('ingredients')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('ingredients')?.errors?.['required']">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Directions</label>
+          <textarea class="form-control" rows="20" name="directions" formControlName="directions"></textarea>
+
+          <div
+            *ngIf="editForm.get('directions')!.invalid && (editForm.get('directions')!.dirty || editForm.get('directions')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('directions')?.errors?.['required']">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Image URL</label>
+          <input type="text" class="form-control" name="imageUrl" formControlName="imageUrl" />
+
+          <div
+            *ngIf="editForm.get('imageUrl')!.invalid && (editForm.get('imageUrl')!.dirty || editForm.get('imageUrl')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('imageUrl')?.errors?.['minlength']">
+              This field is required to be at least 1 character.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('imageUrl')?.errors?.['maxlength']">
+              This field cannot be longer than 255 characters.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="recipe">
+        <button type="submit" [disabled]="editForm.invalid || isSaving" class="btn btn-primary me-2">
+          <fa-icon icon="save"></fa-icon>
+          Save
+        </button>
+
+        <button type="button" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
