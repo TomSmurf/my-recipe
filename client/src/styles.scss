@@ -32,6 +32,10 @@ Generic styles
     border: none;
 }
 
+.pre-line {
+    white-space: pre-line;
+}
+
 .error {
     color: white;
     background-color: red;
@@ -52,11 +56,6 @@ Generic styles
 .break {
     white-space: normal;
     word-break: break-all;
-}
-
-.readonly {
-    background-color: #eee;
-    opacity: 1;
 }
 
 .hand,

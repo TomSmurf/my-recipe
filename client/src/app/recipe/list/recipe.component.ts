@@ -1,90 +1,101 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IRecipe, Recipe } from '../recipe.model';
-import { ITEMS_PER_PAGE, ASC, DESC, SORT } from 'src/app/config/pagination.constants';
 import { Account } from 'src/app/core/auth/account.model';
 import { AccountService } from 'src/app/core/auth/account.service';
 import { Page } from 'src/app/core/request/request.model';
 import { RecipeService } from '../service/recipe.service';
+import { RecipeDeleteModalComponent } from '../delete/recipe-delete-modal.component';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'myr-recipe',
   templateUrl: './recipe.component.html',
+  styleUrls: ['./recipe.component.scss'],
 })
 export class RecipeComponent implements OnInit {
   currentAccount: Account | null = null;
-  recipes: Recipe[] | null = null;
+  recipes: Recipe[] = [];
   isLoading = false;
-  totalItems = 0;
-  itemsPerPage = ITEMS_PER_PAGE;
-  page!: number;
-  predicate!: string;
-  ascending!: boolean;
+  itemsPerPage = 12;
+  last!: boolean;
+  page = 0;
+  sort = ['id'];
+  name!: string;
+  rating!: number;
+
+  searchForm = this.fb.group({
+    name: [''],
+    rating: ['1'],
+    sort: ['name,asc']
+  });
 
   constructor(
     private recipeService: RecipeService,
     private accountService: AccountService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private modalService: NgbModal
-  ) { }
+    private modalService: NgbModal,
+    private fb: FormBuilder
+  ) {
+  }
 
   ngOnInit(): void {
     this.accountService.identity().subscribe(account => (this.currentAccount = account));
-    this.handleNavigation();
+    this.loadAll();
   }
 
   trackIdentity(_index: number, item: Recipe): number {
     return item.id!;
   }
 
+  deleteRecipe(recipe: Recipe): void {
+    const modalRef = this.modalService.open(RecipeDeleteModalComponent, { size: 'lg', backdrop: 'static' });
+    modalRef.componentInstance.recipe = recipe;
+    modalRef.closed.subscribe(reason => {
+      if (reason === 'deleted') {
+        this.reset();
+      }
+    });
+  }
+
   loadAll(): void {
     this.isLoading = true;
     this.recipeService
       .query({
-        page: this.page - 1,
+        page: this.page,
         size: this.itemsPerPage,
-        sort: this.sort(),
+        sort: this.sort,
+        name: this.name,
+        rating: this.rating,
       })
       .subscribe({
         next: (res: Page<Recipe>) => {
           this.isLoading = false;
-          this.recipes = res.content;
-          this.totalItems = res.totalElements;
+          this.last = res.last;
+          this.paginateRecipes(res.content);
         },
         error: () => (this.isLoading = false),
       });
   }
 
-  transition(): void {
-    this.router.navigate(['./'], {
-      relativeTo: this.activatedRoute.parent,
-      queryParams: {
-        page: this.page,
-        sort: `${this.predicate},${this.ascending ? ASC : DESC}`,
-      },
-    });
+  reset(): void {
+    this.page = 0;
+    this.recipes = [];
+    this.sort = [this.searchForm.get(['sort'])!.value, 'id'];
+    this.name = this.searchForm.get(['name'])?.value;
+    this.rating = this.searchForm.get(['rating'])?.value;
+    this.loadAll();
   }
 
-  private handleNavigation(): void {
-    combineLatest([this.activatedRoute.data, this.activatedRoute.queryParamMap]).subscribe(([data, params]) => {
-      const page = params.get('page');
-      this.page = +(page ?? 1);
-      const sort = (params.get(SORT) ?? data['defaultSort']).split(',');
-      this.predicate = sort[0];
-      this.ascending = sort[1] === ASC;
-      this.loadAll();
-    });
+  loadPage(page: number): void {
+    this.page = page;
+    this.loadAll();
   }
 
-  private sort(): string[] {
-    const result = [`${this.predicate},${this.ascending ? ASC : DESC}`];
-    if (this.predicate !== 'id') {
-      result.push('id');
+  protected paginateRecipes(data: IRecipe[] | null): void {
+    if (data) {
+      for (const d of data) {
+        this.recipes.push(d);
+      }
     }
-    return result;
   }
 }

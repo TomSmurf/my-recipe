@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="recipe">
+      <h2>Recipe</h2>
+
+      <myr-alert-error></myr-alert-error>
+
+      <dl class="row-md">
+        <dt>Name</dt>
+        <dd>{{ recipe.name }}</dd>
+
+        <dt>Rating</dt>
+        <dd>{{ recipe.rating }}</dd>
+
+        <dt>Ingredients</dt>
+        <dd class="pre-line">{{ recipe.ingredients }}</dd>
+
+        <dt>Directions</dt>
+        <dd class="pre-line">{{ recipe.directions }}</dd>
+
+        <dt>Created Date</dt>
+        <dd>{{ recipe.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
+
+        <dt>Last Modified Date</dt>
+        <dd>{{ recipe.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
+      </dl>
+
+      <button type="button" class="btn btn-primary me-2" (click)="download(recipe.id!)">
+        <fa-icon icon="download"></fa-icon> 
+        Download PDF
+      </button>
+      <button type="submit" routerLink="../../" class="btn btn-secondary">
+        <fa-icon icon="arrow-left"></fa-icon>
+        Back
+      </button>
+    </div>
+  </div>
+</div>

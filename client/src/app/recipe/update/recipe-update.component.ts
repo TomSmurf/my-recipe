@@ -14,7 +14,6 @@ export class RecipeUpdateComponent implements OnInit {
   isSaving = false;
 
   editForm = this.fb.group({
-    id: [],
     name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(255)]],
     rating: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
     ingredients: ['', [Validators.required]],
@@ -27,7 +26,6 @@ export class RecipeUpdateComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(({ recipe }) => {
       if (recipe) {
-        console.log(recipe);
         this.recipe = recipe;
         this.updateForm(recipe);
       }
@@ -56,9 +54,8 @@ export class RecipeUpdateComponent implements OnInit {
 
   private updateForm(recipe: Recipe): void {
     this.editForm.patchValue({
-      id: recipe.id,
       name: recipe.name,
-      rating: recipe.rating ?? 1,
+      rating: recipe.rating,
       ingredients: recipe.ingredients,
       directions: recipe.directions,
       imageUrl: recipe.imageUrl
