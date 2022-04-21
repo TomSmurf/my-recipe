@@ -1,11 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
-
-import { AlertError } from './alert-error.model';
 import { Alert, AlertService } from 'src/app/core/util/alert.service';
 import { EventManager, EventWithContent } from 'src/app/core/util/event-manager.service';
-
 
 @Component({
   selector: 'myr-alert-error',
@@ -13,19 +10,15 @@ import { EventManager, EventWithContent } from 'src/app/core/util/event-manager.
 })
 export class AlertErrorComponent implements OnDestroy {
   alerts: Alert[] = [];
-  //errorListener: Subscription;
   httpErrorListener: Subscription;
 
   constructor(private alertService: AlertService, private eventManager: EventManager) {
-    //this.errorListener = eventManager.subscribe('myRecipe.error', (response: EventWithContent<unknown> | string) => {
-    //  const errorResponse = (response as EventWithContent<AlertError>).content;
-    //  this.addErrorAlert(errorResponse.message, errorResponse.key, errorResponse.params);
-    //});
-
     this.httpErrorListener = eventManager.subscribe(
       'myRecipe.httpError',
       (response: EventWithContent<unknown> | string) => {
         const httpErrorResponse = (response as EventWithContent<HttpErrorResponse>).content;
+
+        console.log(httpErrorResponse);
         switch (httpErrorResponse.status) {
           case 0:
             this.addErrorAlert('Server not reachable');
@@ -66,7 +59,6 @@ export class AlertErrorComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    //this.eventManager.destroy(this.errorListener);
     this.eventManager.destroy(this.httpErrorListener);
   }
 

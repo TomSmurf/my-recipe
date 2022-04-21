@@ -1,3 +1,5 @@
+import { Pagination } from "../core/request/request.model";
+
 export interface IRecipe {
   id?: number;
   name?: string;
@@ -20,4 +22,9 @@ export class Recipe implements IRecipe {
     public createdDate?: string,
     public lastModifiedDate?: string
   ) { }
+}
+
+export interface RecipeSearch extends Pagination {
+  name?: string;
+  rating?: number;
 }
