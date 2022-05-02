@@ -1,0 +1,87 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2>Create or edit a User</h2>
+
+      <div *ngIf="user">
+        <myr-alert-error></myr-alert-error>
+
+        <div class="mb-3" [hidden]="!user.id">
+          <label class="form-label">ID</label>
+          <input type="text" class="form-control" name="id" formControlName="id" readonly />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Login</label>
+          <input type="text" class="form-control" name="login" formControlName="login" [readonly]="user.id" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">First Name</label>
+          <input type="text" class="form-control" name="firstName" formControlName="firstName" />
+
+          <div
+            *ngIf="editForm.get('firstName')!.invalid && (editForm.get('firstName')!.dirty || editForm.get('firstName')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('firstName')?.errors?.['maxlength']">
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Last Name</label>
+          <input type="text" class="form-control" name="lastName" formControlName="lastName" />
+
+          <div
+            *ngIf="editForm.get('lastName')!.invalid && (editForm.get('lastName')!.dirty || editForm.get('lastName')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('lastName')?.errors?.['maxlength']">
+              This field cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" name="email" formControlName="email" />
+
+          <div
+            *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.['required']">
+              This field is required.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.['maxlength']">
+              This field cannot be longer than 100 characters.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.['minlength']">
+              This field is required to be at least 5 characters.
+            </small>
+
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.['email']" j>
+              Your email is invalid.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Authorities</label>
+          <select class="form-control" multiple name="authority" formControlName="authorities">
+            <option *ngFor="let authority of authorities" [value]="authority">{{ authority }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div *ngIf="user">
+        <button type="submit" [disabled]="editForm.invalid || isSaving" class="btn btn-primary me-2">
+          <fa-icon icon="save"></fa-icon>
+          Save
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
