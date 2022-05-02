@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="user">
+      <h2>
+        User [<strong>{{ user.login }}</strong>]
+      </h2>
+
+      <dl class="row-md">
+        <dt>Login</dt>
+        <dd>{{ user.login }}</dd>
+
+        <dt>First Name</dt>
+        <dd>{{ user.firstName }}</dd>
+
+        <dt>Last Name</dt>
+        <dd>{{ user.lastName }}</dd>
+
+        <dt>Email</dt>
+        <dd>{{ user.email }}</dd>
+
+        <dt>Created By</dt>
+        <dd>{{ user.createdBy }}</dd>
+
+        <dt>Created Date</dt>
+        <dd>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</dd>
+
+        <dt>Last Modified By</dt>
+        <dd>{{ user.lastModifiedBy }}</dd>
+
+        <dt>Last Modified Date</dt>
+        <dd>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</dd>
+
+        <dt>authorities</dt>
+        <dd>
+          <ul class="list-unstyled">
+            <li *ngFor="let authority of user.authorities">
+              <span class="badge bg-info">{{ authority }}</span>
+            </li>
+          </ul>
+        </dd>
+      </dl>
+
+      <button type="submit" routerLink="../../" class="btn btn-info">
+        <fa-icon icon="arrow-left"></fa-icon>
+          Back
+      </button>
+    </div>
+  </div>
+</div>

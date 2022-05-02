@@ -49,18 +49,18 @@ public class AccountController {
     @GetMapping("/account")
     public AccountDto getAccount() {
         var user = userService.getUserWithAuthorities();
-        return userMapper.userToUserDto(user);
+        return userMapper.userToAccountDto(user);
     }
 
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody AccountUpdateDto userDTO) {
-        userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail());
+        userService.updateAccount(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail());
     }
 
     @DeleteMapping("/account")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAccount() {
-        userService.deleteUser();
+        userService.deleteAccount();
     }
 
     @PostMapping("/account/change-password")
