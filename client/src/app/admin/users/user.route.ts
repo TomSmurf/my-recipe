@@ -6,7 +6,7 @@ import { User, IUser } from './user.model';
 import { UserService } from './service/user.service';
 import { UserDetailComponent } from './detail/user-detail.component';
 import { UserComponent } from './list/user.component';
-import { UserUpdateComponent } from './user-update.component';
+import { UserUpdateComponent } from './update/user-update.component';
 
 @Injectable({ providedIn: 'root' })
 export class UserManagementResolve implements Resolve<IUser> {
