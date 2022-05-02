@@ -1,0 +1,101 @@
+<div>
+  <h2>
+    Users
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        Refresh List
+      </button>
+      <button class="btn btn-primary" [routerLink]="['./new']">
+        <fa-icon icon="plus"></fa-icon>
+        Create a new User
+      </button>
+    </div>
+  </h2>
+
+  <myr-alert-error></myr-alert-error>
+
+  <div class="table-responsive" *ngIf="users">
+    <table class="table table-striped" aria-describedby="user-page-heading">
+      <thead>
+        <tr myrSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition()">
+          <th scope="col" myrSortBy="id">
+            ID
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" myrSortBy="login">
+            Login
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" myrSortBy="email">
+            Email
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col">Authorities</th>
+          <th scope="col" myrSortBy="createdDate">
+            Created Date
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" myrSortBy="lastModifiedBy">
+            Last Modified By
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col" myrSortBy="lastModifiedDate">
+            Last Modified Date
+            <fa-icon icon="sort"></fa-icon>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="users">
+        <tr *ngFor="let user of users; trackBy: trackIdentity">
+          <td>
+            <a [routerLink]="['./', user.login, 'view']">{{ user.id }}</a>
+          </td>
+          <td>{{ user.login }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <div *ngFor="let authority of user.authorities">
+              <span class="badge bg-info">{{ authority }}</span>
+            </div>
+          </td>
+          <td>{{ user.createdDate | date: 'dd/MM/yy HH:mm' }}</td>
+          <td>{{ user.lastModifiedBy }}</td>
+          <td>{{ user.lastModifiedDate | date: 'dd/MM/yy HH:mm' }}</td>
+
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['./', user.login, 'view']" class="btn btn-info btn-sm">
+                <fa-icon icon="eye"></fa-icon>
+                View
+              </button>
+
+              <button type="submit" [routerLink]="['./', user.login, 'edit']" queryParamsHandling="merge"
+                class="btn btn-primary btn-sm">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                Edit
+              </button>
+
+              <button type="button" (click)="deleteUser(user)" class="btn btn-danger btn-sm"
+                [disabled]="!currentAccount || currentAccount.login === user.login">
+                <fa-icon icon="times"></fa-icon>
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="users">
+    <div class="d-flex justify-content-center">
+      <myr-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></myr-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination [collectionSize]="totalItems" [(page)]="page" [pageSize]="itemsPerPage" [maxSize]="5"
+        [rotate]="true" [boundaryLinks]="true" (pageChange)="transition()"></ngb-pagination>
+    </div>
+  </div>
+</div>

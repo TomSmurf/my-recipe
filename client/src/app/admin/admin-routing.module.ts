@@ -20,6 +20,13 @@ import { RouterModule } from '@angular/router';
         path: 'metrics',
         loadChildren: () => import('./metrics/metrics.module').then(m => m.MetricsModule),
       },
+      {
+        path: 'users',
+        loadChildren: () => import('./users/user.module').then(m => m.UserModule),
+        data: {
+          pageTitle: 'Users',
+        },
+      },
     ]),
   ],
 })
