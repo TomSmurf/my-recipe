@@ -11,6 +11,7 @@ public class UserDto {
     private String lastName;
     private String email;
     private Instant createdDate;
+    private String createdBy;
     private Instant lastModifiedDate;
     private String lastModifiedBy;
     private Set<String> authorities;
@@ -61,6 +62,14 @@ public class UserDto {
 
     public void setCreatedDate(Instant createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public Instant getLastModifiedDate() {
