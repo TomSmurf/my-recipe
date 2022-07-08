@@ -127,7 +127,7 @@ public class UserService {
         user.getAuthorities().clear();
         if (authorities != null) {
             for (var authority : authorities) {
-                authorityRepository.findById(authority).ifPresent((a) -> user.getAuthorities().add(a));
+                authorityRepository.findById(authority).ifPresent(a -> user.getAuthorities().add(a));
             }
         }
     }
@@ -166,7 +166,7 @@ public class UserService {
         return authorityRepository.findAll()
                 .stream()
                 .map(Authority::getName)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private void checkEmail(String email, String login) {

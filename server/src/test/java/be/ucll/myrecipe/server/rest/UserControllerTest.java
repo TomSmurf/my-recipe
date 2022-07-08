@@ -3,7 +3,6 @@ package be.ucll.myrecipe.server.rest;
 import be.ucll.myrecipe.server.api.UserCreationDto;
 import be.ucll.myrecipe.server.api.UserUpdateDto;
 import be.ucll.myrecipe.server.domain.User;
-import be.ucll.myrecipe.server.repository.AuthorityRepository;
 import be.ucll.myrecipe.server.repository.UserRepository;
 import be.ucll.myrecipe.server.security.AuthoritiesConstants;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WithMockUser(value = "test", roles = "ADMIN")
-public class UserControllerTest extends AbstractIntegrationTest {
+class UserControllerTest extends AbstractIntegrationTest {
 
     @Autowired
     private UserRepository userRepository;
