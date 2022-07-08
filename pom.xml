@@ -23,7 +23,6 @@
         <java.version>17</java.version>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.organization>tomsmurf</sonar.organization>
-        <sonar.projectKey>TomSmurf_my-recipe</sonar.projectKey>
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     </properties>
 
