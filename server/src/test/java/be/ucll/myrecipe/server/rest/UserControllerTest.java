@@ -2,7 +2,9 @@ package be.ucll.myrecipe.server.rest;
 
 import be.ucll.myrecipe.server.api.UserCreationDto;
 import be.ucll.myrecipe.server.api.UserUpdateDto;
+import be.ucll.myrecipe.server.domain.Authority;
 import be.ucll.myrecipe.server.domain.User;
+import be.ucll.myrecipe.server.repository.AuthorityRepository;
 import be.ucll.myrecipe.server.repository.UserRepository;
 import be.ucll.myrecipe.server.security.AuthoritiesConstants;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -22,6 +25,9 @@ class UserControllerTest extends AbstractIntegrationTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AuthorityRepository authorityRepository;
 
     @Test
     void createUser() throws Exception {
@@ -155,6 +161,7 @@ class UserControllerTest extends AbstractIntegrationTest {
         userDto.setFirstName("Jane");
         userDto.setLastName("Doe");
         userDto.setEmail("jane.doe@ucll.com");
+        userDto.setAuthorities(Set.of(AuthoritiesConstants.USER));
 
         mockMvc.perform(put("/api/admin/users/{login}", user.getLogin())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -185,5 +192,17 @@ class UserControllerTest extends AbstractIntegrationTest {
                 .andExpect(status().isNoContent());
 
         assertThat(userRepository.findAll()).hasSize(databaseSizeBeforeDelete - 1);
+    }
+
+    @Test
+    void getAuthorities() throws Exception {
+        var authority = new Authority();
+        authority.setName(AuthoritiesConstants.ADMIN);
+        authorityRepository.save(authority);
+
+        mockMvc.perform(get("/api/admin/users/authorities")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[*]").value(contains(authority.getName())));
     }
 }
