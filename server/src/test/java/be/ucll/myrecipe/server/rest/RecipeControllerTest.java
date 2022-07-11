@@ -163,4 +163,21 @@ class RecipeControllerTest extends AbstractIntegrationTest {
                 .andExpect(jsonPath("$.content[*].imageUrl").value(recipe.getImageUrl()));
     }
 
+    @Test
+    @WithMockUser("test")
+    void testGetRecipePdf() throws Exception {
+        var recipe = new Recipe();
+        recipe.setName("Cake");
+        recipe.setIngredients("3 eggs");
+        recipe.setDirections("Mix eggs");
+        recipe.setRating(1);
+        recipe.setImageUrl("http://placehold.it");
+        recipe.setUser(user);
+        recipeRepository.save(recipe);
+
+        mockMvc.perform(get("/api/recipes/{id}/pdf", recipe.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_PDF));
+    }
+
 }
