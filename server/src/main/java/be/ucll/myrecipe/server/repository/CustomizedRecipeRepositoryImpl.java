@@ -14,7 +14,6 @@ import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CustomizedRecipeRepositoryImpl implements CustomizedRecipeRepository {
 
@@ -78,7 +77,7 @@ public class CustomizedRecipeRepositoryImpl implements CustomizedRecipeRepositor
         return sort
                 .stream()
                 .map(order -> toJpaOrder(order, from, cb))
-                .collect(Collectors.toList());
+                .toList();
     }
 
     private javax.persistence.criteria.Order toJpaOrder(Sort.Order order, From<?, ?> from, CriteriaBuilder cb) {

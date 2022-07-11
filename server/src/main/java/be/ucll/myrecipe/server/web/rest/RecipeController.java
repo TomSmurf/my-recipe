@@ -5,7 +5,6 @@ import be.ucll.myrecipe.server.api.RecipeDto;
 import be.ucll.myrecipe.server.api.RecipeUpdateDto;
 import be.ucll.myrecipe.server.mapper.RecipeMapper;
 import be.ucll.myrecipe.server.service.RecipeService;
-import com.itextpdf.text.DocumentException;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -68,7 +67,7 @@ public class RecipeController {
     }
 
     @GetMapping("/recipes/{id}/pdf")
-    public ResponseEntity<Resource> getPdf(@PathVariable Long id) throws IOException, DocumentException {
+    public ResponseEntity<Resource> getPdf(@PathVariable Long id) throws IOException {
         var resource = recipeService.getPdf(id);
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"myrecipe.pdf\"")

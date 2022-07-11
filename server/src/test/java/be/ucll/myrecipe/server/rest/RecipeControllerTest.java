@@ -4,7 +4,6 @@ import be.ucll.myrecipe.server.api.RecipeCreationDto;
 import be.ucll.myrecipe.server.api.RecipeUpdateDto;
 import be.ucll.myrecipe.server.domain.Recipe;
 import be.ucll.myrecipe.server.domain.User;
-import be.ucll.myrecipe.server.repository.AuthorityRepository;
 import be.ucll.myrecipe.server.repository.RecipeRepository;
 import be.ucll.myrecipe.server.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,15 +13,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-public class RecipeControllerTest extends AbstractIntegrationTest {
+class RecipeControllerTest extends AbstractIntegrationTest {
 
     @Autowired
     private RecipeRepository recipeRepository;

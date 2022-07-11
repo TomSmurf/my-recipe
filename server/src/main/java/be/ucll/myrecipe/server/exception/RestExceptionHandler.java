@@ -13,7 +13,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -39,7 +38,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         var errors = ex.getConstraintViolations()
                 .stream()
                 .map(violation -> violation.getRootBeanClass().getName() + " " + violation.getPropertyPath() + ": " + violation.getMessage())
-                .collect(Collectors.toList());
+                .toList();
 
         var apiErrorDto = new ApiErrorDto(HttpStatus.BAD_REQUEST, "Constraint Violation", errors);
         return new ResponseEntity<>(apiErrorDto, apiErrorDto.getStatus());
