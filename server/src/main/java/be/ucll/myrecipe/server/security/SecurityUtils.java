@@ -1,16 +1,11 @@
 package be.ucll.myrecipe.server.security;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
-/**
- * Utility class for Spring Security.
- */
 public final class SecurityUtils {
 
     private SecurityUtils() {
@@ -30,9 +25,5 @@ public final class SecurityUtils {
             return principal;
         }
         return null;
-    }
-
-    private static Stream<String> getAuthorities(Authentication authentication) {
-        return authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority);
     }
 }

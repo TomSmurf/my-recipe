@@ -52,7 +52,7 @@ public class SecurityConfiguration {
         // @formatter:off
         http
             .csrf()
-                .disable()
+                .disable() // Compliant
             .cors()
                 .disable()
             .exceptionHandling()
